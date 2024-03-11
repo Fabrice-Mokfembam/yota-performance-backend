@@ -77,19 +77,19 @@ const shippingAddress = new Schema({
 	country: { type: String, default: null },
 	telephone: { type: String, default: null },
 });
-
+ 
 const users = new Schema({
 	_id: { type: String },
 	username: { type: String, required: true },
 	password: { type: String, required: true },
-	email: { type: String, required: true },
-	shipping_address: shippingAddress, 
+	email: { type: String, required: true }, 
+	shipping_address: shippingAddress,  
 });
 
 // const orders = new Schema({
 // 	_id: { type: String },
 // 	user_id: { type: String, default: null },
-// 	product_ids: { type: [String], required: true },
+// 	product_ids: { type: [String], required: true }, 
 // 	quantities: { type: [Number], required: true },
 // 	total_price: { type: Number, required: true },
 // 	shipping_id: { type: Number, required: true },
@@ -98,7 +98,7 @@ const users = new Schema({
 // 	delivery_date: { type: Date, required: true },
 // });
 const orders = new Schema({
-	_id: { type: String },
+	_id: { type: String }, 
 	id: mongoose.Schema.Types.ObjectId,
   user_id: { type: String, default: null },
   items: [{
@@ -125,7 +125,7 @@ const transactionSchema = new Schema({
 	timestamp: { type: Date, default: Date.now },
 });
 
-const paymentSchema = new Schema({
+const paymentSchema = new Schema({ 
 	_id: { type: String },
 	userId: { type: String, required: true },
 	paymentMethod: { type: String, required: true },
@@ -133,7 +133,7 @@ const paymentSchema = new Schema({
 });
 
 const MessageSchema = new Schema({
-	sender: { type: String, required: true },
+	sender: { type: String, required: true }, 
 	text: { type: String, required: true, default: "" },
 	timestamp: { type: Date, required: true, default: Date.now() },
 });
@@ -228,19 +228,19 @@ app.post("/create/shipping", async (req, res) => {
 	const newTest = new Shipping(req.body);
 	const result = await newTest.save();
 	res.send(result);
-});
+}); 
 
 app.post("/create/bonus", async (req, res) => {
 	req.body._id = await generateUserId("Bonus");
 	const newTest = new Bonus(req.body);
 	const result = await newTest.save();
-	res.send(result);
+	res.send(result); 
 });
  
 app.post("/create/finance", async (req, res) => {
 	req.body._id = await generateUserId("Finance");
 	const newTest = new Finance(req.body);
-	const result = await newTest.save();
+	const result = await newTest.save(); 
 	res.send(result);
 });
 
@@ -264,18 +264,18 @@ app.get("/get/product/:category", async (req, res) => {
 	res.send(result);
 });
 
-app.get("/get/product/:product_name", async (req, res) => {
-	const result = await Product.find({
-		product_name:{$regex: /req.params.product_name/i }
-	});
-	res.send(result);  
-}); 
+// app.get("/get/product/:product_name", async (req, res) => {
+// 	const result = await Product.find({
+// 		product_name:{$regex: /req.params.product_name/i }
+// 	});
+// 	res.send(result);  
+// }); 
 
 
 app.put("/update/product/addReview/:id", async (req, res) => {
 	const result = await Product.findByIdAndUpdate(req.params.id, {$push:{reviews: req.body}},{new:true});
 	res.send(result);
-});
+}); 
 
 app.get("/get/orders", async (req, res) => {
   try {
@@ -301,7 +301,8 @@ app.get("/get/chat/admin/:id", async (req, res) => {
 });
 //end added
 
- 
+app.get('/', (req, res) => { res.send('hello') })
+
 app.get("/get/product/:id", async (req, res) => {
 	const result = await Product.findOne({ _id: req.params.id });
 	res.send(result);
