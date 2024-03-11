@@ -301,7 +301,9 @@ app.get("/get/chat/admin/:id", async (req, res) => {
 });
 //end added
 
-app.get('/', (req, res) => { res.send('hello') })
+app.get('/', (req, res) => {
+  res.json('hello');
+});
 
 app.get("/get/product/:id", async (req, res) => {
 	const result = await Product.findOne({ _id: req.params.id });
